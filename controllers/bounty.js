@@ -6,4 +6,4 @@ exports.newBounty = function(req, res) {
 
 exports.postBounty = function(req, res) {
   res.json(req.body);
-}
+};
