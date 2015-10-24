@@ -115,6 +115,8 @@ app.get('/account', passportConf.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConf.isAuthenticated, userController.postUpdateProfile);
 app.post('/account/password', passportConf.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
+app.get('/createwallet', passportConf.isAuthenticated, userController.createWallet);
+app.post('/postwallet', passportConf.isAuthenticated, userController.postWallet);
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 app.get('/bounty/new', bountyController.newBounty);
 app.post('/bounty/new', bountyController.postBounty);
@@ -198,7 +200,9 @@ app.get('/auth/venmo', passport.authorize('venmo', { scope: 'make_payments acces
 app.get('/auth/venmo/callback', passport.authorize('venmo', { failureRedirect: '/api' }), function(req, res) {
   res.redirect('/api/venmo');
 });
-
+app.get('/auth/venmo/callback', passport.authorize('venmo', { failureRedirect: '/api' }), function(req, res) {
+  res.redirect('/api/venmo');
+});
 
 /**
  * Error Handler.
