@@ -18,6 +18,22 @@ exports.getLogin = function(req, res) {
 };
 
 /**
+ * GET /createwallet
+ * Create wallet form.
+ */
+exports.createWallet = function(req, res, next) {
+  res.render('account/createwallet', {
+    title: 'Create Wallet'
+  });
+};
+
+exports.postWallet = function(req, res, next) {
+  res.json(req.body);
+  // https://blockchain.info/api/v2/create_wallet 
+};
+
+ 
+/**
  * POST /login
  * Sign in using email and password.
  */
