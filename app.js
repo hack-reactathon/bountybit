@@ -109,7 +109,7 @@ app.get('/wallet/new', passportConf.isAuthenticated, walletController.createWall
 app.post('/wallet/new', passportConf.isAuthenticated, walletController.postWallet, walletController.connectWalletToUser);
 app.get('/wallet/getWalletBalance', passportConf.isAuthenticated, walletController.getWalletBalance);
 
-app.get('/bounty/getAll/:user', passportConf.isAuthenticated, bountyController.getAll);
+app.get('/api/bounty/getAll/:user', passportConf.isAuthenticated, bountyController.getAll);
 
 app.get('/sendReword', passportConf.isAuthenticated, userController.sendReword); 
 
@@ -131,7 +131,7 @@ app.post('/account/password', passportConf.isAuthenticated, userController.postU
 app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 app.get('/bounty/new', passportConf.isAuthenticated, bountyController.newBounty);
-app.post('/bounty/new', passportConf.isAuthenticated, bountyController.postBounty, walletController.postWallet, walletController.connectWalletToBounty);
+app.post('/bounty/new', passportConf.isAuthenticated, bountyController.postBounty, walletController.postWallet, walletController.connectWalletToBounty, apiController.sendBitcoin);
 
 
 /**
