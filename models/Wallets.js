@@ -9,6 +9,7 @@ var walletSchema = new Schema({
     values: ['user', 'bounty']
     }
   },
+  bountyWalletPassword: { type: String },
   _bountyOwner: { type: Number, ref: 'Bounty' },
   _userOwner: { type: Number, ref: 'User' }
 });

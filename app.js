@@ -30,7 +30,7 @@ var userController = require('./controllers/user');
 var apiController = require('./controllers/api');
 var contactController = require('./controllers/contact');
 var bountyController = require('./controllers/bounty');
-
+var walletController = require('./controllers/wallet');
 /**
  * API keys and Passport configuration.
  */
@@ -99,8 +99,8 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
 /**
  * Primary app routes.
  */
-app.get('/createwallet', passportConf.isAuthenticated, userController.createWallet);
-app.post('/createwallet', passportConf.isAuthenticated, userController.postCreateWallet);
+app.get('/wallet/new', passportConf.isAuthenticated, walletController.createWallet);
+app.post('/wallet/new', passportConf.isAuthenticated, walletController.postWallet, walletController.connectWalletToUser);
 app.get('/', homeController.index);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
@@ -118,8 +118,8 @@ app.post('/account/profile', passportConf.isAuthenticated, userController.postUp
 app.post('/account/password', passportConf.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
-app.get('/bounty/new', bountyController.newBounty);
-app.post('/bounty/new', bountyController.postBounty);
+app.get('/bounty/new', passportConf.isAuthenticated, bountyController.newBounty);
+app.post('/bounty/new', passportConf.isAuthenticated, bountyController.postBounty, walletController.postWallet, walletController.connectWalletToBounty);
 
 
 /**
