@@ -99,6 +99,8 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
 /**
  * Primary app routes.
  */
+app.get('/createwallet', passportConf.isAuthenticated, userController.createWallet);
+app.post('/createwallet', passportConf.isAuthenticated, userController.postCreateWallet);
 app.get('/', homeController.index);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
@@ -198,7 +200,9 @@ app.get('/auth/venmo', passport.authorize('venmo', { scope: 'make_payments acces
 app.get('/auth/venmo/callback', passport.authorize('venmo', { failureRedirect: '/api' }), function(req, res) {
   res.redirect('/api/venmo');
 });
-
+app.get('/auth/venmo/callback', passport.authorize('venmo', { failureRedirect: '/api' }), function(req, res) {
+  res.redirect('/api/venmo');
+});
 
 /**
  * Error Handler.
