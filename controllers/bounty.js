@@ -106,7 +106,7 @@ exports.postBounty = function(req, res, next) {
             req.bountyID = savedBounty._id;
             req.ownerType = "bounty";
             req.bountyPW = rk.generate(20);
-            var parseURL = url.parse('https://github.com/kidmillions/hi-mom/issues/1/');
+            var parseURL = url.parse(req.body.bountyUrl);
             var options = {
               uri: 'https://api.github.com/repos' + parseURL.pathname + 'comments',
               headers: {
@@ -117,9 +117,6 @@ exports.postBounty = function(req, res, next) {
               json: true
             };
             request.post(options, function(err,response,body){
-              console.log(response);
-              console.log(body);
-              res.json(body);
             });
             next();
           });
@@ -128,24 +125,4 @@ exports.postBounty = function(req, res, next) {
     });
   });
 };
-
-  exports.bountyComment = function(req, res) {
-    console.log('REQUEST THIS!!!');
-    var options = {
-      uri: 'https://api.github.com/repos/kidmillions/hi-mom/issues/1/comments',
-      headers: {
-        'Authorization': 'token 639118b8ff4e9abced81312761103194cb1bcc8c',
-        'User-Agent': 'BitHub-bot'
-      },
-      body: {'body': 'Test from the local'},
-      json: true
-    };
-
-    request.post(options, function(err,response,body){ 
-      console.log(response);
-      console.log(body);
-      res.json(body);
-    });
-
-  };
 
