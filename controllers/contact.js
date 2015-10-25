@@ -1,4 +1,9 @@
-var secrets = require('../config/secrets');
+var secrets;
+if (process.env.environment === 'PROD') {
+  secrets = require('../config/secrets_prod');
+} else {
+  secrets = require('../config/secrets');
+}
 var nodemailer = require("nodemailer");
 var transporter = nodemailer.createTransport({
   service: 'SendGrid',

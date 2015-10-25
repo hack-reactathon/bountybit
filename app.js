@@ -34,7 +34,13 @@ var walletController = require('./controllers/wallet');
 /**
  * API keys and Passport configuration.
  */
-var secrets = require('./config/secrets');
+var secrets;
+console.log(process.env.environment);
+if (process.env.environment === 'PROD') {
+  secrets = require('./config/secrets_prod');
+} else {
+  secrets = require('./config/secrets');
+}
 var passportConf = require('./config/passport');
 
 /**
