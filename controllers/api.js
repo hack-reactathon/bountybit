@@ -7,7 +7,7 @@ var request;
 
 var _ = require('lodash');
 var async = require('async');
-var querystring = require('querystring');
+var request = require('request');
 
 var secrets;
 if (process.env.environment === 'PROD') {
@@ -15,12 +15,6 @@ if (process.env.environment === 'PROD') {
 } else {
   secrets = require('../config/secrets');
 }
-
-
-
-
-
-
 /**
  * GET /api
  * List of API examples.
@@ -31,7 +25,22 @@ exports.getApi = function(req, res) {
   });
 };
 
-
+exports.sendBitcoin = function(req,res) {
+  console.log("Sending Bitcoin to Wallet");
+  console.log("guid: ", req.transaction.guid);
+  console.log("password: ", req.transaction.password);
+  console.log("api_code: ", req.transaction.api_code);
+  console.log("to: ", req.transaction.to);
+  console.log("amount: ", req.transaction.amount);
+  var options = {
+    url: "https://blockchain.info/hi/merchant/" + req.transaction.guid + "/payment?password=" + req.transaction.password + "&api_code=" + req.transaction.api_code + "&amount=" + req.transaction.amount + "&to=" + req.transaction.to,
+    method: 'GET'
+  }
+  request(options, function(err, response, body) {
+    console.log("Sent: ", body);
+    res.json(body);
+  });
+};
 
 
 /**

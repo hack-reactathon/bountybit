@@ -12,6 +12,13 @@ exports.newBounty = function(req, res) {
   });
 };
 
+exports.getAll = function(req, res) {
+  console.log(req.params);
+  User.findOne({email: req.params.user}, function(err, user){
+    res.json(user.bounties);
+  });
+};
+
 exports.postBounty = function(req, res, next) {
   // res.json(req.body);
   // req.body.bountyAmount;
@@ -47,12 +54,17 @@ exports.postBounty = function(req, res, next) {
       return console.err('error finding user: ', err);
     }
 
-    req.bountyPassword = rk.generate(20);
-
     User.findById(req.user.id).populate('wallet').exec(function(err, user) {
       if (err || !user.wallet) {
         return console.error('Could not find wallet, or perhaps an error ', err);
       }
+      console.log("User inside bounty controller: ", user);
+      req.transaction = {
+        guid: user.wallet.guid,
+        password: req.body.password,
+        amount: req.body.bountyAmount,
+        api_code: 'f1161a96-5e74-48ea-94b9-d0ff72247533'
+      };
       user.wallet.compareBountyPassword(req.body.password, function(result) {
         console.log(result);
         if (!result.passed) {

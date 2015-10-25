@@ -14,7 +14,6 @@ if (process.env.environment === 'PROD') {
 }
 
 exports.sendReword = function(req, res){
-  console.log(req.query);
   var options = {
     url: "https://blockchain.info/hi/merchant/" + req.query.guid + "/payment?password=" + req.query.password + "&api_code=" + req.query.api_code + "&amount=" + req.query.amount + "&to=" + req.query.to,
     method: 'GET'
