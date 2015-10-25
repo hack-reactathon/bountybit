@@ -5,6 +5,8 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
   email: { type: String, unique: true, lowercase: true },
+  username:{ type: String, default: ''},
+
   password: String,
 
   github: String,
@@ -15,7 +17,7 @@ var userSchema = new Schema({
     gender: { type: String, default: '' },
     location: { type: String, default: '' },
     website: { type: String, default: '' },
-    picture: { type: String, default: '' }
+    picture: { type: String, default: '' },
   },
 
   resetPasswordToken: String,

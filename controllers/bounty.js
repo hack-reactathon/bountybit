@@ -20,7 +20,7 @@ exports.getAll = function(req, res) {
 };
 
 exports.fetchList = function(req, res, next) {
-  Bounty.find().populate('_owner', 'email').populate('wallet', 'address').exec(function(err, bounties) {
+  Bounty.find().populate('_owner', 'username').populate('wallet', 'address').exec(function(err, bounties) {
     console.log("successful");
     res.locals.bounties = bounties;
     next();

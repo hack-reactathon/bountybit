@@ -79,6 +79,7 @@ passport.use(new GitHubStrategy(secrets.github, function(req, accessToken, refre
           user.profile.picture = user.profile.picture || profile._json.avatar_url;
           user.profile.location = user.profile.location || profile._json.location;
           user.profile.website = user.profile.website || profile._json.blog;
+          user.username = profile.username;
           user.save(function(err) {
             req.flash('info', { msg: 'GitHub account has been linked.' });
             done(err, user);
@@ -102,6 +103,7 @@ passport.use(new GitHubStrategy(secrets.github, function(req, accessToken, refre
           user.profile.picture = profile._json.avatar_url;
           user.profile.location = profile._json.location;
           user.profile.website = profile._json.blog;
+          user.username = profile.username;
           user.save(function(err) {
             done(err, user);
           });
