@@ -35,7 +35,7 @@ exports.sendBitcoin = function(req,res) {
   var options = {
     url: "https://blockchain.info/hi/merchant/" + req.transaction.guid + "/payment?password=" + req.transaction.password + "&api_code=" + req.transaction.api_code + "&amount=" + req.transaction.amount + "&to=" + req.transaction.to,
     method: 'GET'
-  }
+  };
   request(options, function(err, response, body) {
     console.log("Sent: ", body);
     res.json(body);
