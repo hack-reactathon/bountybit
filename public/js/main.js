@@ -77,5 +77,27 @@ $(document).ready(function() {
     });
   }
 
+  $('.release-bounty').on('click', 'a', function() {
+    var $link = $(this);
+    $.ajax({
+      method: 'POST',
+      url: '/bounty/complete',
+      data: {
+        bountyID: $(this).closest('tr').find('.hidden').text(),
+        _csrf: $(this).attr('_csrf')
+      },
+      error: function(xhr) {
+        console.log(xhr);
+      },
+      success: function(data) {
+        console.log(data);
+        var $solvedCell = $link.closest('tr').find('.bounty-solved');
+        $solvedCell.text('true');
+        $solvedCell.removeClass('danger');
+        $solvedCell.addClass('success');
+      }
+    });
+  });
+
 
 });
