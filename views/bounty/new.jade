@@ -7,8 +7,12 @@ block content
       label.control-label(for='email') New Bounty URL
       input.form-control(type='text', name='bountyUrl', id='bountyUrl', placeholder='Enter the Github issues url to bounty', autofocus=true)
     .form-group
+      label(for="walletPW") Personal Wallet Password
+      .input-group
+      input.form-control(type="text", name="walletPW", id="walletPW", placeholder="Personal Wallet Password")
+    .form-group
       label(for="bountyAmount") Amount (in mBTC)
       .input-group
         .input-group-addon ฿
         input.form-control(type="text", name="bountyAmount", id="bountyAmount", placeholder="Amount")
-    button.btn.btn-default(type="submit") Submit Your Bounty
+    button.btn.btn-default(type="submit") Create Bounty
