@@ -20,8 +20,8 @@ exports.getAll = function(req, res) {
 };
 
 exports.fetchList = function(req, res, next) {
-  Bounty.find().populate('_owner').exec(function(err, bounties) {
-    console.log("successful")
+  Bounty.find().populate('_owner', 'email').populate('wallet', 'address').exec(function(err, bounties) {
+    console.log("successful");
     res.locals.bounties = bounties;
     next();
   });
@@ -77,13 +77,16 @@ exports.postBounty = function(req, res, next) {
           error: 'Error finding Wallet'
         });
       }
-      console.log("User inside bounty controller: ", user);
+
+
       req.transaction = {
         guid: user.wallet.guid,
         password: req.body.password,
         amount: req.body.bountyAmount,
         api_code: 'f1161a96-5e74-48ea-94b9-d0ff72247533'
       };
+
+
       user.wallet.compareBountyPassword(req.body.password, function(result) {
         console.log(result);
         if (!result.passed) {
@@ -101,6 +104,8 @@ exports.postBounty = function(req, res, next) {
           user.bounties.push(savedBounty);
           user.save(function(err, savedUser) {
             req.bountyID = savedBounty._id;
+            req.ownerType = "bounty";
+            req.bountyPW = rk.generate(20);
             next();
           });
         });

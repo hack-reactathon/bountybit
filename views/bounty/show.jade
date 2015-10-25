@@ -9,8 +9,9 @@ block content
         tr 
           th User
           th Issue 
-          th Bounty 
+          th Bounty Issue
           th Solved?
+          th Bounty Address
       tbody
       each bounty in bounties
           tr 
@@ -22,4 +23,6 @@ block content
               i.fa.fa-btc
               span= bounty.total
             td(class=bounty.solved?'success':'danger')= bounty.solved
-  
+            td
+              a#addressqr(href="#" data-container="body" data-toggle="popover" data-placement="right",
+              data-content="<img src='https://blockchain.info/qr?data=#{bounty.wallet.address}&size=150'>") #{bounty.wallet.address}

@@ -18,13 +18,11 @@ exports.createWallet = function(req, res, next) {
 
 exports.postWallet = function(req, res, next) {
 
-  //gen random password for bounty wallets, bountyID passed from .postBounty()
-
   var options = {
     url: 'https://blockchain.info/api/v2/create_wallet',
     method: 'POST',
     form: {
-      password: req.body.password,
+      password: req.bountyPW || req.body.password,
       api_code: 'f1161a96-5e74-48ea-94b9-d0ff72247533'
     },
     headers: {
@@ -55,7 +53,7 @@ exports.postWallet = function(req, res, next) {
         address: data.address,
         link: data.link,
         ownerType: req.ownerType || 'user',
-        password: req.body.password
+        password: req.bountyPW || req.body.password
       });
       wallet.save(function(err, saved) {
         if (err) {
