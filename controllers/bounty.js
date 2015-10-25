@@ -154,8 +154,9 @@ exports.completeBounty = function(req, res) {
       console.log('Status:', response.statusCode);
       console.log('Headers:', JSON.stringify(response.headers));
       console.log('Response:', body);
-
-      var parseURL = url.parse(req.body.bountyUrl);
+      console.log(req.body)
+      console.log(bounty.issueUrl);
+      var parseURL = url.parse(bounty.issueUrl);
       var options = {
         uri: 'https://api.github.com/repos' + parseURL.pathname + '/comments',
         headers: {
