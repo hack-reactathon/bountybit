@@ -10,7 +10,7 @@ var request = require('request');
 
 
 
-exports.createWallet = function(req, res) {
+exports.postCreateWallet = function(req, res) {
   var options = {
     url: 'https://blockchain.info/api/v2/create_wallet',
     method: 'POST',

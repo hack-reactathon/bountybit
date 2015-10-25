@@ -99,7 +99,8 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
 /**
  * Primary app routes.
  */
-app.get('/createWallet', userController.createWallet);
+app.get('/createwallet', passportConf.isAuthenticated, userController.createWallet);
+app.post('/createwallet', passportConf.isAuthenticated, userController.postCreateWallet);
 app.get('/', homeController.index);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
@@ -116,8 +117,6 @@ app.get('/account', passportConf.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConf.isAuthenticated, userController.postUpdateProfile);
 app.post('/account/password', passportConf.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
-app.get('/createwallet', passportConf.isAuthenticated, userController.createWallet);
-app.post('/postwallet', passportConf.isAuthenticated, userController.postWallet);
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 app.get('/bounty/new', bountyController.newBounty);
 app.post('/bounty/new', bountyController.postBounty);

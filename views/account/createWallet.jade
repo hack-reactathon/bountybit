@@ -3,7 +3,7 @@ extends ../layout
 block content
   .page-header
     h3 Create Bitcoin Wallet with Blockchain
-  form(method='POST', action="/postwallet")
+  form(method='POST', action="/createWallet")
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
       label.control-label(for='password') Bitcoin Wallet Password
