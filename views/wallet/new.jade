@@ -7,5 +7,6 @@ block content
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
       label.control-label(for='password') Bitcoin Wallet Password
+      //TODO: front-end validation that checks for minlength === 10
       input.form-control(type='password', name='password', id='password', placeholder='Enter a Password for a new Bitcoin Wallet', autofocus=true)
     button.btn.btn-default(type="submit") Create a Bitcoin Wallet
