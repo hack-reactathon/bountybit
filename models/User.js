@@ -20,7 +20,7 @@ var userSchema = new Schema({
 
   resetPasswordToken: String,
   resetPasswordExpires: Date,
-  wallets: [{ type: Schema.Types.ObjectId, ref: 'Wallet' }],
+  wallet: { type: Schema.Types.ObjectId, ref: 'Wallet' },
   bounties: [{ type: Schema.Types.ObjectId, ref: 'Bounty'}]
 });
 
