@@ -35,7 +35,7 @@ exports.postWallet = function(req, res, next) {
       return console.error('error: ', error);
     }
     if (response.statusCode !== 200) {
-      res.json(response);  
+      res.json(response);
     }
 
     // Add new wallet address to request for future transaction.
@@ -116,5 +116,15 @@ exports.connectWalletToBounty = function(req, res, next) {
         next();
       });
     });
+  });
+};
+
+exports.getUserWallet = function(walletID, cb) {
+  Wallet.findById(walletID).exec(function(err, wallet) {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, wallet);
+    }
   });
 };

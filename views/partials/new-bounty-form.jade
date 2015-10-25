@@ -11,10 +11,12 @@ form(method='POST', action="/bounty/new")
           input.form-control(type="password", name="password", id="password", placeholder="Personal Wallet Password")
     .col-md-5
       .form-group
-        label(for="bountyAmount") Amount (in Satoshis)
+        label(for="bountyAmount") Amount (in mBTC)
         .input-group
           .input-group-addon
             i.fa.fa-btc
           input.form-control(type="text", name="bountyAmount", id="bountyAmount", placeholder="Amount")
+          .input-group-addon#currency-conversion
+            
     .col-md-3.top-margin-push
       button.btn.btn-primary(type="submit") Create Bounty

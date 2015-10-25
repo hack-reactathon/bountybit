@@ -93,7 +93,13 @@ app.use(lusca({
 }));
 app.use(function(req, res, next) {
   res.locals.user = req.user;
-  next();
+  walletController.getUserWallet(req.user.wallet, function(err, wallet) {
+    if (err) {
+      console.log(err);
+    }
+    res.locals.wallet = wallet;
+    next();
+  });
 });
 app.use(function(req, res, next) {
   if (/api/i.test(req.path)) req.session.returnTo = req.path;
