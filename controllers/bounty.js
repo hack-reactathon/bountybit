@@ -20,15 +20,15 @@ exports.getAll = function(req, res) {
 };
 
 exports.fetchList = function(req, res, next) {
-  User.find({}, function(err, bounties) {
-    console.log("successfull")
+  Bounty.find().populate('_owner').exec(function(err, bounties) {
+    console.log("successful")
     res.locals.bounties = bounties;
     next();
   });
 };
 
 exports.displayList = function(req, res) {
-  res.render('bounty/existing', {
+  res.render('bounty/show', {
     title: 'All Lists'
   });
 };

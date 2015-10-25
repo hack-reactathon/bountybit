@@ -120,7 +120,7 @@ app.post('/wallet/new', passportConf.isAuthenticated, walletController.postWalle
 app.get('/wallet/getWalletBalance', passportConf.isAuthenticated, walletController.getWalletBalance);
 
 app.get('/api/bounty/getAll/:user', passportConf.isAuthenticated, bountyController.getAll);
-app.get('/bounty/fetchList', bountyController.fetchList, bountyController.displayList);
+app.get('/bounty', bountyController.fetchList, bountyController.displayList);
 
 app.get('/sendReword', passportConf.isAuthenticated, userController.sendReword);
 
