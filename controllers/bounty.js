@@ -88,7 +88,6 @@ exports.postBounty = function(req, res, next) {
 
 
       user.wallet.compareBountyPassword(req.body.password, function(result) {
-        console.log(result);
         if (!result.passed) {
           return res.render('403', {
             error: 'Invalid password'
@@ -108,7 +107,7 @@ exports.postBounty = function(req, res, next) {
             req.bountyPW = rk.generate(20);
             var parseURL = url.parse(req.body.bountyUrl);
             var options = {
-              uri: 'https://api.github.com/repos' + parseURL.pathname + 'comments',
+              uri: 'https://api.github.com/repos' + parseURL.pathname + '/comments',
               headers: {
                 'Authorization': 'token 639118b8ff4e9abced81312761103194cb1bcc8c',
                 'User-Agent': 'BitHub-bot'
@@ -116,13 +115,18 @@ exports.postBounty = function(req, res, next) {
               body: {'body': user.email + ' has placed a bounty worth ' + req.body.bountyAmount + ' m฿ on this issue.'},
               json: true
             };
+            console.log('https://api.github.com/repos' + parseURL.pathname + '/comments');
             request.post(options, function(err,response,body){
+              if(err) {
+                console.log('error: ', err);
+
+              }
+              console.log(body);
+              next();
             });
-            next();
           });
         });
       });
     });
   });
 };
-

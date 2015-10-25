@@ -38,7 +38,8 @@ exports.sendBitcoin = function(req,res) {
   };
   request(options, function(err, response, body) {
     console.log("Sent: ", body);
-    res.json(body);
+    req.flash('success', { msg: 'Bounty has been placed!' });
+    res.redirect('/');
   });
 };
 
