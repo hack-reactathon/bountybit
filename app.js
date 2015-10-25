@@ -101,6 +101,12 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
  */
 app.get('/wallet/new', passportConf.isAuthenticated, walletController.createWallet);
 app.post('/wallet/new', passportConf.isAuthenticated, walletController.postWallet, walletController.connectWalletToUser);
+app.get('/getWalletBalance', passportConf.isAuthenticated, walletController.getWalletBalance);
+
+app.get('/sendReword', passportConf.isAuthenticated, userController.sendReword); 
+app.get('/deleteAllUsers', passportConf.isAuthenticated, userController.deleteAllUsers);
+app.post('/createwallet', passportConf.isAuthenticated, userController.postCreateWallet);
+
 app.get('/', homeController.index);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
