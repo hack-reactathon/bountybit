@@ -10,7 +10,12 @@ var LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 var OAuthStrategy = require('passport-oauth').OAuthStrategy;
 var OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 
-var secrets = require('./secrets');
+var secrets;
+if (process.env.environment === 'PROD') {
+  secrets = require('./secrets_prod');
+} else {
+  secrets = require('./secrets');
+}
 var User = require('../models/User');
 
 passport.serializeUser(function(user, done) {
