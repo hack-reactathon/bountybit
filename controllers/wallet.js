@@ -1,5 +1,7 @@
+var async = require('async');
 var request = require('request');
 var _ = require('lodash');
+var secrets = require('../config/secrets');
 var Wallet = require('../models/Wallets');
 var User = require('../models/User');
 var Bounty = require('../models/Bounties');
@@ -68,6 +70,57 @@ exports.postWallet = function(req, res, next) {
 
       });
     }
+  });
+};
+
+exports.getAllWalletBalances = function(req, res) {
+  var walletsArray = [];
+  var requestArray = [];
+  Wallet.find({}, function(err, wallets) {
+    wallets.forEach(function(wallet) {
+      var options = {
+        url: "https://blockchain.info/merchant/" + wallet.guid + "/balance?password=dogjumpedovermoon&api_code=" + secrets.api_code,
+        method: 'GET'
+      }
+      requestArray.push(function() {
+        request(options, function(err, response, body) {
+          if (err) console.log(err);
+          console.log(body);
+          return wallet.guid + ' - ' + body;
+        });
+      });
+    });
+    async.parallel(requestArray, function(result) {
+      console.log(result);
+      res.send(result);
+    });
+  });
+};
+
+exports.getWallets = function(req, res) {
+  var walletsArray = [];
+  var requestArray = [];
+  Wallet.find({}, function(err, wallets) {
+    wallets.forEach(function(wallet) {
+      var options = {
+        url: "https://blockchain.info/merchant/" + wallet.guid + "/balance?password=dogjumpedovermoon&api_code=" + secrets.api_code,
+        method: 'GET'
+      }
+      requestArray.push(function(callback) {
+        request(options, function(err, response, body) {
+          if (err) console.log(err);
+          body = JSON.parse(body);
+          body.address = wallet.address;
+          body.guid = wallet.guid;
+          callback(null, body)
+        });
+      });
+    });
+    async.parallel(requestArray, function(err, results) {
+      console.log(results);
+      res.locals.wallets = results
+      res.render('wallet/show', {});
+    });
   });
 };
 
