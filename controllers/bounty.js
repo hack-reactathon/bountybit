@@ -8,7 +8,7 @@ var rk = require('random-key');
 
 exports.newBounty = function(req, res) {
   res.render('bounty/new', {
-    title: 'Create a new bounty'
+    title: 'New Bounty'
   });
 };
 
@@ -72,19 +72,15 @@ exports.postBounty = function(req, res, next) {
         }
         var bounty = new Bounty({
           total: req.body.bountyAmount,
-          issueUrl: req.body.bountyUrl
+          issueUrl: req.body.bountyUrl,
+          _owner: user
         });
 
         bounty.save(function(err, savedBounty) {
           user.bounties.push(savedBounty);
           user.save(function(err, savedUser) {
-            savedBounty._owner = savedUser;
-            savedBounty.save(function(err, saved) {
-              console.log('saved bounty');
-              console.log(saved);
-              req.bountyID = saved._id;
-              next();
-            });
+            req.bountyID = savedBounty._id;
+            next();
           });
         });
       });

@@ -1,0 +1,10 @@
+form(method='POST', action="/wallet/new")
+  input(type='hidden', name='_csrf', value=_csrf)
+  .row
+    .col-md-8
+      .form-group
+        label.control-label(for='password') Bitcoin Wallet Password
+        //TODO: front-end validation that checks for minlength === 10
+        input.form-control(type='password', name='password', id='password', placeholder='Enter a Password for a new Bitcoin Wallet', autofocus=true)
+    .col-md-4
+      button.btn.btn-primary.btn-large.top-margin-push(type="submit") Create a Bitcoin Wallet
