@@ -13,20 +13,27 @@
       ul.nav.navbar-nav
         li(class=title=='Home'?'active':undefined)
           a(href='/') Home
-        li(class=title=='All Lists'?'active':undefined)
+        li(class=title=='All Bounties'?'active':undefined)
           a(href='/bounty') Bounty List
-        li(class=title=='All Lists'?'active':undefined)
+        li(class=title=='All Wallets'?'active':undefined)
           a(href='/wallets') Wallet List
+        li(class=title=='New Bounty'?'active':undefined)
+          a(href='/bounty/new') New Bounty
       ul.nav.navbar-nav.navbar-right
         if wallet
           li
-            a#addressqr(href="#" data-container="body" data-toggle="popover" data-placement="bottom",
-            data-content="<img src='https://blockchain.info/qr?data=#{wallet.address}&size=150'>") Your Wallet: #{wallet.address}
+            a#addressqr(href="bitcoin:#{wallet.address}" data-container="body" data-toggle="popover" data-placement="bottom",
+            data-content="<img src='https://blockchain.info/qr?data=#{wallet.address}&size=150'>",
+            data-trigger="hover focus") Your Wallet: 
+              span#wallet-address #{wallet.address}
+          li 
+            a(href="#")
+              i.fa.fa-btc
+              span#wallet-total 
         if !user
           li(class=title=='Login'?'active':undefined)
             a(href='/login') Login
         else
-          
           li.dropdown(class=title=='Account Management'?'active':undefined)
             a.dropdown-toggle(href='#', data-toggle='dropdown')
               if user.profile.picture
@@ -44,5 +51,3 @@
               li.divider
               li
                 a(href='/logout') Logout
-          li(class=title=='New Bounty'?'active':undefined)
-            a(href='/bounty/new') New Bounty

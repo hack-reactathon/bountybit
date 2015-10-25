@@ -2,7 +2,7 @@ extends layout
 
 block content
   
-  h1 BitHub
+  h1 Welcome to BitHub
   p.lead Place a bounty on the issues that matter.
   if !user
     .page-header
@@ -12,10 +12,11 @@ block content
         | Sign in with GitHub
   else
     .row
-        .col-sm-6
+        .col-sm-6(class=!wallet?'col-sm-offset-3':undefined)
           a.btn.btn-lg.btn-default.btn-block#toggle-wallet-box(href="#add-wallet-box") Add / Change Your Wallet
-        .col-sm-6
-          a.btn.btn-lg.btn-default.btn-block#toggle-bounty-box(href="#place-bounty-box") Place a Bounty
+        if wallet
+          .col-sm-6
+            a.btn.btn-lg.btn-default.btn-block#toggle-bounty-box(href="#place-bounty-box") Place a Bounty
     .row.boxes-row
       .col-md-8.col-md-offset-2
         #add-wallet-box(style="display: none;")

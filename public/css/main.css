@@ -12342,10 +12342,21 @@ footer {
   width: 100%;
   height: 45px;
   line-height: 45px;
+  background-color: #333745;
+  color: #F6F792;
 }
 
 footer p, footer ul {
   margin-bottom: 0;
+}
+
+footer p a, footer ul a {
+  color: #F6F792;
+}
+
+footer p a:hover, footer ul a:hover {
+  text-decoration: none;
+  color: #77C4D3;
 }
 
 .navbar-nav img {

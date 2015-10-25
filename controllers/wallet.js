@@ -18,13 +18,11 @@ exports.createWallet = function(req, res, next) {
 
 exports.postWallet = function(req, res, next) {
 
-  //gen random password for bounty wallets, bountyID passed from .postBounty()
-
   var options = {
     url: 'https://blockchain.info/api/v2/create_wallet',
     method: 'POST',
     form: {
-      password: req.body.password,
+      password: req.bountyPW || req.body.password,
       api_code: 'f1161a96-5e74-48ea-94b9-d0ff72247533'
     },
     headers: {
@@ -55,7 +53,7 @@ exports.postWallet = function(req, res, next) {
         address: data.address,
         link: data.link,
         ownerType: req.ownerType || 'user',
-        password: req.body.password
+        password: req.bountyPW || req.body.password
       });
       wallet.save(function(err, saved) {
         if (err) {
@@ -81,7 +79,7 @@ exports.getAllWalletBalances = function(req, res) {
       var options = {
         url: "https://blockchain.info/merchant/" + wallet.guid + "/balance?password=dogjumpedovermoon&api_code=" + secrets.api_code,
         method: 'GET'
-      }
+      };
       requestArray.push(function() {
         request(options, function(err, response, body) {
           if (err) console.log(err);
@@ -105,21 +103,23 @@ exports.getWallets = function(req, res) {
       var options = {
         url: "https://blockchain.info/merchant/" + wallet.guid + "/balance?password=dogjumpedovermoon&api_code=" + secrets.api_code,
         method: 'GET'
-      }
+      };
       requestArray.push(function(callback) {
         request(options, function(err, response, body) {
           if (err) console.log(err);
           body = JSON.parse(body);
           body.address = wallet.address;
           body.guid = wallet.guid;
-          callback(null, body)
+          callback(null, body);
         });
       });
     });
     async.parallel(requestArray, function(err, results) {
       console.log(results);
-      res.locals.wallets = results
-      res.render('wallet/show', {});
+      res.locals.wallets = results;
+      res.render('wallet/show', {
+        title: 'All Wallets'
+      });
     });
   });
 };
