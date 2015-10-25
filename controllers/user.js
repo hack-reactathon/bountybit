@@ -7,26 +7,6 @@ var User = require('../models/User');
 var secrets = require('../config/secrets');
 var request = require('request');
 
-exports.deleteAllUsers = function() {
-  User.find({}, function(err, users) {
-    users.forEach(function(user) {
-      user.remove();
-    });
-  });  
-};
-
-exports.getWalletBalance = function(req, res) {
-  console.log(req.query);
-  var options = {
-    url: "https://blockchain.info/merchant/" + req.query.guid + "/balance?password=" + req.query.password + "&api_code=" + req.query.api_code,
-    method: 'GET'
-  }
-  request(options, function(err, response, body) {
-    console.log("Got from getWalletBalance: ", body);
-    res.send(body);
-  });
-};
-
 exports.sendReword = function(req, res){
   console.log(req.query);
   var options = {
@@ -39,39 +19,6 @@ exports.sendReword = function(req, res){
   });
 };
 
-exports.postCreateWallet = function(req, res) {
-  var options = {
-    url: 'https://blockchain.info/api/v2/create_wallet',
-    method: 'POST',
-    form: {
-      password: "dogjumpedovermoon",
-      api_code: 'f1161a96-5e74-48ea-94b9-d0ff72247533'
-    },
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  }
-
-  request(options, function(error, response, body) {
-    if(!error && response.statusCode == 200) {
-      User.findOne({email: req.user.email}, function(err, docs){
-        body = JSON.parse(body);
-        docs.wallet.address = body.address;
-        docs.wallet.link = body.link;
-        docs.wallet.guid = body.guid;
-        docs.save(function(err){
-          if(err) {
-            console.log("ERROR");
-          }
-        });
-      })
-    }
-  })
-};
-
-
-
-
 /**
  * GET /login
  * Login page.
@@ -82,8 +29,6 @@ exports.getLogin = function(req, res) {
     title: 'Login'
   });
 };
-
-
 
 /**
  * POST /login

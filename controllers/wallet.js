@@ -63,6 +63,17 @@ exports.postWallet = function(req, res, next) {
   });
 };
 
+exports.getWalletBalance = function(req, res) {
+  console.log(req.query);
+  var options = {
+    url: "https://blockchain.info/merchant/" + req.query.guid + "/balance?password=" + req.query.password + "&api_code=" + req.query.api_code,
+    method: 'GET'
+  }
+  request(options, function(err, response, body) {
+    console.log("Got from getWalletBalance: ", body);
+    res.send(body);
+  });
+};
 
 exports.connectWalletToUser = function(req, res) {
   Wallet.findById(req.walletID).exec(function(err, wallet) {
