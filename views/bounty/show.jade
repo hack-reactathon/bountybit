@@ -1,6 +1,7 @@
 extends ../layout
 
 block content
+  
   .page-header
     h3 All Ye Bounties
     
@@ -14,7 +15,9 @@ block content
         th Solved?
     tbody
     each bounty in bounties
-      tr 
+      
+      tr   
+        td.hidden= bounty._id
         td @
           span= bounty._owner.username
         td
@@ -22,10 +25,13 @@ block content
         td
           | m
           i.fa.fa-btc
-          span.total
+          span.total= bounty.total
           //- span= bounty.total
         td
           a.tableqr(href="bitcoin:#{bounty.wallet.address}" data-container=".table" data-toggle="popover" data-placement="right",
           data-content="<img src='https://blockchain.info/qr?data=#{bounty.wallet.address}&size=150'>",
           data-trigger="hover focus") #{bounty.wallet.address}
-        td(class=bounty.solved?'success':'danger')= bounty.solved
+        td.bounty-solved(class=bounty.solved?'success':'danger')= bounty.solved
+        if bounty._owner.username === user.username
+          td.release-bounty
+            a.btn.btn-default.btn-small(type="button" _csrf=_csrf) Mark as Complete

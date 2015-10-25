@@ -130,3 +130,39 @@ exports.postBounty = function(req, res, next) {
     });
   });
 };
+
+
+exports.completeBounty = function(req, res) {
+  console.log(req.body);
+
+  Bounty.findById(req.body.bountyID).populate('wallet').exec(function(err, bounty) {
+    console.log(bounty);
+    request({
+      method: 'POST',
+      url: 'https://blockchain.info/merchant/' + bounty.wallet.guid + '/payment',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      //currently, chris own electrum account is the only recipient
+      body: "password=" + bounty.wallet.password + "&\
+        address=1N6ViJhmhH4hhtSmQzBQUCJ7eTQENzyknq&\
+        amount=" + (bounty.total * 100000) + "&\
+        from=" + bounty.wallet.address + "&\
+        fee=10000&\
+        note=Payment%20for%20your%20services!"
+    }, function (error, response, body) {
+      console.log('Status:', response.statusCode);
+      console.log('Headers:', JSON.stringify(response.headers));
+      console.log('Response:', body);
+      res.json(body);
+    });
+
+
+
+
+
+
+  })
+
+
+};

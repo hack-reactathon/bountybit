@@ -144,7 +144,7 @@ app.post('/account/delete', passportConf.isAuthenticated, userController.postDel
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 app.get('/bounty/new', passportConf.isAuthenticated, bountyController.newBounty);
 app.post('/bounty/new', passportConf.isAuthenticated, bountyController.postBounty, walletController.postWallet, walletController.connectWalletToBounty, apiController.sendBitcoin);
-
+app.post('/bounty/complete', passportConf.isAuthenticated, bountyController.completeBounty);
 /**
  * API examples routes.
  */
