@@ -84,6 +84,7 @@ $(document).ready(function() {
       url: '/bounty/complete',
       data: {
         bountyID: $(this).closest('tr').find('.hidden').text(),
+        bountyUrl: $(this).closest('tr').find('.bounty-url'),
         _csrf: $(this).attr('_csrf')
       },
       error: function(xhr) {

@@ -21,7 +21,7 @@ block content
         td @
           span= bounty._owner.username
         td
-          a(href="#{bounty.issueUrl}", target="_blank")= bounty.issueUrl
+          a.bounty-url(href="#{bounty.issueUrl}", target="_blank")= bounty.issueUrl
         td
           | m
           i.fa.fa-btc

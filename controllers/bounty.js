@@ -112,7 +112,7 @@ exports.postBounty = function(req, res, next) {
                 'Authorization': 'token 639118b8ff4e9abced81312761103194cb1bcc8c',
                 'User-Agent': 'BountyHub-bot'
               },
-              body: {'body': user.email + ' has placed a bounty worth ' + req.body.bountyAmount + ' m฿ on this issue.'},
+              body: {'body': '@' + user.username + ' has placed a bounty worth ' + req.body.bountyAmount + ' m฿ on this issue.'},
               json: true
             };
             console.log('https://api.github.com/repos' + parseURL.pathname + '/comments');
@@ -154,7 +154,28 @@ exports.completeBounty = function(req, res) {
       console.log('Status:', response.statusCode);
       console.log('Headers:', JSON.stringify(response.headers));
       console.log('Response:', body);
-      res.json(body);
+
+      var parseURL = url.parse(req.body.bountyUrl);
+      var options = {
+        uri: 'https://api.github.com/repos' + parseURL.pathname + '/comments',
+        headers: {
+          'Authorization': 'token 639118b8ff4e9abced81312761103194cb1bcc8c',
+          'User-Agent': 'BountyHub-bot'
+        },
+        body: {'body': 'The bounty of ' + bounty.total + ' m฿ has been claimed by @kidmillions'},
+        json: true
+      };
+      console.log('https://api.github.com/repos' + parseURL.pathname + '/comments');
+      request.post(options, function(err,response,body){
+        if(err) {
+          console.log('error: ', err);
+
+        }
+        console.log(body);
+        req.flash('success', { msg: 'Bounty has been completed!' });
+        res.json('success');
+      });
+
     });
 
 
