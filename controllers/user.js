@@ -9,6 +9,7 @@ var request = require('request');
 
 
 
+
 /**
  * GET /login
  * Login page.
@@ -19,6 +20,7 @@ exports.getLogin = function(req, res) {
     title: 'Login'
   });
 };
+
 
 
 /**
