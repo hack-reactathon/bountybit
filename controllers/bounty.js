@@ -125,4 +125,3 @@ exports.postBounty = function(req, res, next) {
     });
   });
 };
-

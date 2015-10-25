@@ -157,7 +157,8 @@ exports.connectWalletToUser = function(req, res) {
           });
         }
         console.log('saved it all');
-        res.json(saved);
+        req.flash('success', { msg: 'Successfully created Wallet!' });
+        res.redirect('/');
       });
     });
   });
