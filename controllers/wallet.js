@@ -83,13 +83,11 @@ exports.getAllWalletBalances = function(req, res) {
       requestArray.push(function() {
         request(options, function(err, response, body) {
           if (err) console.log(err);
-          console.log(body);
           return wallet.guid + ' - ' + body;
         });
       });
     });
     async.parallel(requestArray, function(result) {
-      console.log(result);
       res.send(result);
     });
   });
@@ -115,7 +113,6 @@ exports.getWallets = function(req, res) {
       });
     });
     async.parallel(requestArray, function(err, results) {
-      console.log(results);
       res.locals.wallets = results;
       res.render('wallet/show', {
         title: 'All Wallets'
@@ -125,7 +122,6 @@ exports.getWallets = function(req, res) {
 };
 
 exports.getWalletBalance = function(req, res) {
-  console.log(req.query);
   var options = {
     url: "https://blockchain.info/merchant/" + req.query.guid + "/balance?password=" + req.query.password + "&api_code=" + req.query.api_code,
     method: 'GET'
