@@ -3,7 +3,6 @@ var _ = require('lodash');
 var Wallet = require('../models/Wallets');
 var User = require('../models/User');
 var Bounty = require('../models/Bounties');
-var rk = require('random-key');
 
 /**
  * GET /createwallet
@@ -18,19 +17,12 @@ exports.createWallet = function(req, res, next) {
 exports.postWallet = function(req, res, next) {
 
   //gen random password for bounty wallets, bountyID passed from .postBounty()
-  var pw;
-  var ownerType = 'user';
-  if (req.bountyID) {
-    pw = rk.generate(20);
-    ownerType = 'bounty';
-  }
-
 
   var options = {
     url: 'https://blockchain.info/api/v2/create_wallet',
     method: 'POST',
     form: {
-      password: pw || "dogjumpedovermoon",
+      password: req.bountyPassword || req.body.password,
       api_code: 'f1161a96-5e74-48ea-94b9-d0ff72247533'
     },
     headers: {
@@ -42,13 +34,18 @@ exports.postWallet = function(req, res, next) {
     if (error) {
       return console.error('error: ', error);
     }
+    if (response.statusCode !== 200) {
+      res.json(response);  
+    }
+
     if(!error && response.statusCode == 200) {
       var data = JSON.parse(body);
       var wallet = new Wallet({
         guid: data.guid,
         address: data.address,
         link: data.link,
-        ownerType: ownerType
+        ownerType: req.ownerType || 'user',
+        password: req.bountyPassword || req.body.password
       });
       wallet.save(function(err, saved) {
         if (err) {
