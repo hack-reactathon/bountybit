@@ -26,10 +26,20 @@ footer {
   width: 100%;
   height: 45px;
   line-height: 45px;
+  background-color: $brand-primary;
+  color: #F6F792;
 
   p, ul {
     margin-bottom: 0;
+    a {
+      color: #F6F792;
+      &:hover {
+        text-decoration: none;
+        color: $brand-success
+      }
+    }
   }
+
 }
 
 // Navbar

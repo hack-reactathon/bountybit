@@ -20,6 +20,10 @@ $(document).ready(function() {
     html: true
   });
 
+  $(".tableqr").popover({
+    html: true
+  });
+
 
 
   $.ajax({
@@ -29,12 +33,27 @@ $(document).ready(function() {
       console.log(xhr);
     },
     success: function(data) {
-      console.log(data);
       $('#bountyAmount').on('keyup', function() {
         $(this).siblings('#currency-conversion').text("$" + (data['USD']['15m'] * $(this).val() / 1000).toFixed(2) + "USD");
       });
     }
   });
+
+  var userWalletAddress = $('#wallet-address').text();
+
+  if (userWalletAddress) {
+    $.ajax({
+      method: 'GET',
+      url: 'https://blockchain.info/q/addressbalance/' + userWalletAddress + '/confirmations=3',
+      error: function(xhr) {
+        console.log(xhr);
+      },
+      success: function(data) {
+        var bc = (data / 100000000).toFixed(2);
+        $('#wallet-total').text(bc);
+      }
+    });
+  }
 
 
 });
