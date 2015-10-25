@@ -1,0 +1,20 @@
+form(method='POST', action="/bounty/new")
+  input(type='hidden', name='_csrf', value=_csrf)
+  .form-group
+    label.control-label(for='email') New Bounty URL
+    input.form-control(type='text', name='bountyUrl', id='bountyUrl', placeholder='Enter the Github issues url to bounty', autofocus=true)
+  .row
+    .col-md-4
+      .form-group
+        label(for="password") Personal Wallet Password
+        .input-group
+          input.form-control(type="password", name="password", id="password", placeholder="Personal Wallet Password")
+    .col-md-5
+      .form-group
+        label(for="bountyAmount") Amount (in Satoshis)
+        .input-group
+          .input-group-addon
+            i.fa.fa-btc
+          input.form-control(type="text", name="bountyAmount", id="bountyAmount", placeholder="Amount")
+    .col-md-3.top-margin-push
+      button.btn.btn-primary(type="submit") Create Bounty

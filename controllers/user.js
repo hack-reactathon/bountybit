@@ -17,7 +17,7 @@ exports.sendReword = function(req, res){
   var options = {
     url: "https://blockchain.info/hi/merchant/" + req.query.guid + "/payment?password=" + req.query.password + "&api_code=" + req.query.api_code + "&amount=" + req.query.amount + "&to=" + req.query.to,
     method: 'GET'
-  }
+  };
   request(options, function(err, response, body) {
     console.log("Sent: ", body);
     res.send(body);
