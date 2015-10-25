@@ -110,7 +110,7 @@ exports.postBounty = function(req, res, next) {
               uri: 'https://api.github.com/repos' + parseURL.pathname + '/comments',
               headers: {
                 'Authorization': 'token 639118b8ff4e9abced81312761103194cb1bcc8c',
-                'User-Agent': 'BitHub-bot'
+                'User-Agent': 'BountyHub-bot'
               },
               body: {'body': user.email + ' has placed a bounty worth ' + req.body.bountyAmount + ' m฿ on this issue.'},
               json: true
