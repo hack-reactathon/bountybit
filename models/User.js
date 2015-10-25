@@ -23,7 +23,13 @@ var userSchema = new mongoose.Schema({
   },
 
   resetPasswordToken: String,
-  resetPasswordExpires: Date
+  resetPasswordExpires: Date,
+
+  wallet: {
+    guid: {type: String, default: ''},
+    address: {type: String, default: ''},
+    link: {type: String, default: ''}
+  }
 });
 
 /**
