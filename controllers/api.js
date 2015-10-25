@@ -8,8 +8,6 @@ var request;
 var _ = require('lodash');
 var async = require('async');
 var querystring = require('querystring');
-
-
 var secrets = require('../config/secrets');
 
 
