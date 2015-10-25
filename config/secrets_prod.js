@@ -18,5 +18,7 @@ clientID:process.env.GITHUB_ID,
 clientSecret:process.env.GITHUB_SECRET,
 callbackURL:'/auth/github/callback',
 passReqToCallback:true
-}
+},
+api_code:process.env.api_code
+
 };

@@ -1,11 +1,18 @@
 var async = require('async');
 var request = require('request');
 var _ = require('lodash');
-var secrets = require('../config/secrets');
+
 var Wallet = require('../models/Wallets');
 var User = require('../models/User');
 var Bounty = require('../models/Bounties');
 
+
+var secrets;
+if (process.env.environment === 'PROD') {
+  secrets = require('../config/secrets_prod');
+} else {
+  secrets = require('../config/secrets');
+}
 /**
  * GET /createwallet
  * Create wallet form.
