@@ -9,9 +9,8 @@ var _ = require('lodash');
 var async = require('async');
 var querystring = require('querystring');
 
-
 var secrets;
-if (process.env.production === 'PROD') {
+if (process.env.environment === 'PROD') {
   secrets = require('../config/secrets_prod');
 } else {
   secrets = require('../config/secrets');

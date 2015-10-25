@@ -1,5 +1,5 @@
 var secrets;
-if (process.env.production === 'PROD') {
+if (process.env.environment === 'PROD') {
   secrets = require('../config/secrets_prod');
 } else {
   secrets = require('../config/secrets');
