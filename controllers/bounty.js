@@ -12,6 +12,13 @@ exports.newBounty = function(req, res) {
   });
 };
 
+exports.getAll = function(req, res) {
+  console.log(req.params);
+  User.findOne({email: req.params.user}, function(err, user){
+    res.json(user.bounties);
+  });
+};
+
 exports.postBounty = function(req, res, next) {
   // res.json(req.body);
   // req.body.bountyAmount;
