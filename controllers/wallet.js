@@ -32,14 +32,17 @@ exports.postWallet = function(req, res, next) {
 
   request(options, function(error, response, body) {
     if (error) {
-      return console.error('error: ', error);
+      console.error(error);
+      return res.render('500', {
+        error: 'Error placing bounty'
+      });
     }
     if (response.statusCode !== 200) {
       res.json(response);
     }
 
     // Add new wallet address to request for future transaction.
-    
+
     if(!error && response.statusCode == 200) {
       var data = JSON.parse(body);
       // console.log("DATA", data);
@@ -54,7 +57,10 @@ exports.postWallet = function(req, res, next) {
       });
       wallet.save(function(err, saved) {
         if (err) {
-          return console.error('error saving wallet: ', err);
+          console.error(err);
+          return res.render('500', {
+            error: 'Error Saving Wallet'
+          });
         }
 
         req.walletID = saved.id;
@@ -70,7 +76,7 @@ exports.getWalletBalance = function(req, res) {
   var options = {
     url: "https://blockchain.info/merchant/" + req.query.guid + "/balance?password=" + req.query.password + "&api_code=" + req.query.api_code,
     method: 'GET'
-  }
+  };
   request(options, function(err, response, body) {
     console.log("Got from getWalletBalance: ", body);
     res.send(body);
@@ -83,13 +89,19 @@ exports.connectWalletToUser = function(req, res) {
       wallet: wallet
     }, function(err, user) {
       if (err) {
-        return console.error('error updating user: ', err);
+        console.error('error updating user');
+        return res.render('500', {
+          error: 'Error updating user'
+        });
       }
 
       wallet._userOwner = user;
       wallet.save(function(err, saved) {
         if (err) {
-          return console.err('error updating wallet to user asso: ', err);
+          console.error(err);
+          return res.render('500', {
+            error: 'Error associating user to wallet'
+          });
         }
         console.log('saved it all');
         res.json(saved);
@@ -104,13 +116,19 @@ exports.connectWalletToBounty = function(req, res, next) {
       wallet: wallet
     }, function(err, bounty) {
       if (err) {
-        return console.error('error updating bounty: ', err);
+        console.error(err);
+        return res.render('500', {
+          error: 'Error updating bounty'
+        });
       }
 
       wallet._bountyOwner = bounty;
       wallet.save(function(err, saved) {
         if (err) {
-          return console.err('error updating wallet to user asso: ', err);
+          console.error(err);
+          return res.render('500', {
+            error: 'Error making bounty to wallet association'
+          });
         }
         console.log('saved it all');
         next();

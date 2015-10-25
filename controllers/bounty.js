@@ -66,12 +66,16 @@ exports.postBounty = function(req, res, next) {
 
   User.findById(req.user.id).exec(function(err, user) {
     if (err) {
-      return console.err('error finding user: ', err);
+      return res.render('500', {
+        error: 'Error finding user'
+      });
     }
 
     User.findById(req.user.id).populate('wallet').exec(function(err, user) {
       if (err || !user.wallet) {
-        return console.error('Could not find wallet, or perhaps an error ', err);
+        return res.render('500', {
+          error: 'Error finding Wallet'
+        });
       }
       console.log("User inside bounty controller: ", user);
       req.transaction = {
@@ -83,7 +87,9 @@ exports.postBounty = function(req, res, next) {
       user.wallet.compareBountyPassword(req.body.password, function(result) {
         console.log(result);
         if (!result.passed) {
-          return res.json('invalid password');
+          return res.render('403', {
+            error: 'Invalid password'
+          });
         }
         var bounty = new Bounty({
           total: req.body.bountyAmount,
