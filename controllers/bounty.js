@@ -172,6 +172,7 @@ exports.completeBounty = function(req, res) {
 
         }
         console.log(body);
+        req.flash('success', { msg: 'Bounty has been completed!' });
         res.json('success');
       });
 
