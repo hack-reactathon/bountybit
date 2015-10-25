@@ -79,7 +79,7 @@ exports.getAllWalletBalances = function(req, res) {
       var options = {
         url: "https://blockchain.info/merchant/" + wallet.guid + "/balance?password=dogjumpedovermoon&api_code=" + secrets.api_code,
         method: 'GET'
-      }
+      };
       requestArray.push(function() {
         request(options, function(err, response, body) {
           if (err) console.log(err);
@@ -103,21 +103,23 @@ exports.getWallets = function(req, res) {
       var options = {
         url: "https://blockchain.info/merchant/" + wallet.guid + "/balance?password=dogjumpedovermoon&api_code=" + secrets.api_code,
         method: 'GET'
-      }
+      };
       requestArray.push(function(callback) {
         request(options, function(err, response, body) {
           if (err) console.log(err);
           body = JSON.parse(body);
           body.address = wallet.address;
           body.guid = wallet.guid;
-          callback(null, body)
+          callback(null, body);
         });
       });
     });
     async.parallel(requestArray, function(err, results) {
       console.log(results);
-      res.locals.wallets = results
-      res.render('wallet/show', {});
+      res.locals.wallets = results;
+      res.render('wallet/show', {
+        title: 'All Wallets'
+      });
     });
   });
 };

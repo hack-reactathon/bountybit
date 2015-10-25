@@ -29,7 +29,7 @@ exports.fetchList = function(req, res, next) {
 
 exports.displayList = function(req, res) {
   res.render('bounty/show', {
-    title: 'All Lists'
+    title: 'All Bounties'
   });
 };
 

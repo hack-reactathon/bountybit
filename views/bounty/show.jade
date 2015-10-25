@@ -2,7 +2,7 @@ extends ../layout
 
 block content
   .page-header
-    h3 All Existing Unsolved Bounties
+    h3 All Ye Bounties
     
   table.table.table-hover
     thead
@@ -21,8 +21,10 @@ block content
         td
           | m
           i.fa.fa-btc
-          span= bounty.total
+          span.total
+          //- span= bounty.total
         td
-          a.tableqr(href="#" data-container=".table" data-toggle="popover" data-placement="right",
-          data-content="<img src='https://blockchain.info/qr?data=#{bounty.wallet.address}&size=150'>") #{bounty.wallet.address}
+          a.tableqr(href="bitcoin:#{bounty.wallet.address}" data-container=".table" data-toggle="popover" data-placement="right",
+          data-content="<img src='https://blockchain.info/qr?data=#{bounty.wallet.address}&size=150'>",
+          data-trigger="hover focus") #{bounty.wallet.address}
         td(class=bounty.solved?'success':'danger')= bounty.solved
