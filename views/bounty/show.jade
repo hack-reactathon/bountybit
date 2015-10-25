@@ -15,7 +15,8 @@ block content
     tbody
     each bounty in bounties
       tr 
-        td= bounty._owner.email
+        td @
+          span= bounty._owner.username
         td
           a(href="#{bounty.issueUrl}", target="_blank")= bounty.issueUrl
         td
