@@ -19,6 +19,21 @@ exports.getAll = function(req, res) {
   });
 };
 
+exports.fetchList = function(req, res, next) {
+  User.find({}, function(err, bounties) {
+    console.log("successfull")
+    res.locals.bounties = bounties;
+    next();
+  });
+};
+
+exports.displayList = function(req, res) {
+  res.render('bounty/existing', {
+    title: 'All Lists'
+  });
+};
+
+
 exports.postBounty = function(req, res, next) {
   // res.json(req.body);
   // req.body.bountyAmount;

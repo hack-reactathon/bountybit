@@ -92,14 +92,18 @@ app.use(lusca({
   xssProtection: true
 }));
 app.use(function(req, res, next) {
-  res.locals.user = req.user;
-  walletController.getUserWallet(req.user.wallet, function(err, wallet) {
-    if (err) {
-      console.log(err);
-    }
-    res.locals.wallet = wallet;
+  if (req.user) {
+    res.locals.user = req.user;
+    walletController.getUserWallet(req.user.wallet, function(err, wallet) {
+      if (err) {
+        console.log(err);
+      }
+      res.locals.wallet = wallet;
+      next();
+    });
+  } else {
     next();
-  });
+  }
 });
 app.use(function(req, res, next) {
   if (/api/i.test(req.path)) req.session.returnTo = req.path;
@@ -116,6 +120,7 @@ app.post('/wallet/new', passportConf.isAuthenticated, walletController.postWalle
 app.get('/wallet/getWalletBalance', passportConf.isAuthenticated, walletController.getWalletBalance);
 
 app.get('/api/bounty/getAll/:user', passportConf.isAuthenticated, bountyController.getAll);
+app.get('/bounty/fetchList', bountyController.fetchList, bountyController.displayList);
 
 app.get('/sendReword', passportConf.isAuthenticated, userController.sendReword);
 
@@ -138,7 +143,6 @@ app.post('/account/delete', passportConf.isAuthenticated, userController.postDel
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 app.get('/bounty/new', passportConf.isAuthenticated, bountyController.newBounty);
 app.post('/bounty/new', passportConf.isAuthenticated, bountyController.postBounty, walletController.postWallet, walletController.connectWalletToBounty, apiController.sendBitcoin);
-
 
 /**
  * API examples routes.
