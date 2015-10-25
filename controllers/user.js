@@ -4,8 +4,14 @@ var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 var passport = require('passport');
 var User = require('../models/User');
-var secrets = require('../config/secrets');
 var request = require('request');
+
+var secrets;
+if (process.env.production === 'PROD') {
+  secrets = require('../config/secrets_prod');
+} else {
+  secrets = require('../config/secrets');
+}
 
 exports.sendReword = function(req, res){
   console.log(req.query);
